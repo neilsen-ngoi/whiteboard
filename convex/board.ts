@@ -16,6 +16,7 @@ const images = [
   "/placeholders/10.svg",
 ];
 
+//Create board
 export const create = mutation({
   args: {
     orgId: v.string(),
@@ -29,7 +30,7 @@ export const create = mutation({
     }
 
     const randomImage = images[Math.floor(Math.random() * images.length)];
-    // generate board
+    // generate board props
     const board = await ctx.db.insert("boards", {
       title: args.title,
       orgId: args.orgId,
@@ -37,10 +38,12 @@ export const create = mutation({
       authorName: identity.name!,
       imgageUrl: randomImage,
     });
+
     return board;
   },
 });
 
+//Delete board
 export const remove = mutation({
   args: { id: v.id("boards") },
   handler: async (ctx, args) => {
@@ -51,5 +54,33 @@ export const remove = mutation({
     }
     //TODO
     await ctx.db.delete(args.id);
+  },
+});
+
+//Rename/update board
+export const update = mutation({
+  args: { id: v.id("boards"), title: v.string() },
+  handler: async (ctx, args) => {
+    const identity = await ctx.auth.getUserIdentity();
+
+    if (!identity) {
+      throw new Error("Unauthorized");
+    }
+
+    const title = args.title.trim();
+
+    if (!title) {
+      throw new Error("Title is required");
+    }
+
+    if (title.length > 60) {
+      throw new Error("Title cannot be longer that 60 characters");
+    }
+    // update title name in database
+    const board = await ctx.db.patch(args.id, {
+      title: args.title,
+    });
+
+    return board;
   },
 });
