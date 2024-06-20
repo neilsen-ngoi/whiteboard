@@ -2,6 +2,7 @@ import { Liveblocks } from "@liveblocks/node";
 import { ConvexHttpClient } from "convex/browser";
 import { api } from "@/convex/_generated/api";
 import { auth, currentUser } from "@clerk/nextjs/server";
+import { stringify } from "querystring";
 
 const convex = new ConvexHttpClient(process.env.NEXT_PUBLIC_CONVEX_URL!);
 
@@ -36,10 +37,11 @@ export async function POST(request: Request) {
   });
 
   if (board?.orgId !== authorization.orgId) {
-    return new Response("Unauthorized");
+    return new Response("Unauthorized", { status: 403 });
   }
   const userInfo = {
-    name: user.firstName,
+    //TODO check if ! behind firstName is needed
+    name: user.firstName!,
     picture: user.imageUrl,
   };
 
