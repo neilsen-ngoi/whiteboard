@@ -1,4 +1,4 @@
-// reusable action for cards
+// reusable dropdown menu with actions
 "use client";
 
 import { DropdownMenuContentProps } from "@radix-ui/react-dropdown-menu";
