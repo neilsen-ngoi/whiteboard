@@ -3,7 +3,6 @@
 import { Info } from "./info";
 import { Participants } from "./participants";
 import { Toolbar } from "./toolbar";
-import { useSelf } from "@liveblocks/react/suspense";
 
 interface CanvasProps {
   boardId: string;
