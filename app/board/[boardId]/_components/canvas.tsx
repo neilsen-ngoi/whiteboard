@@ -5,7 +5,6 @@ import { Info } from "./info";
 import { Participants } from "./participants";
 import { Toolbar } from "./toolbar";
 import { Camera, CanvasMode, CanvasState } from "@/types/canvas";
-
 import {
   useHistory,
   useCanUndo,
@@ -14,6 +13,8 @@ import {
 } from "@liveblocks/react/suspense";
 import { CursorsPresence } from "./cursors-presence";
 import { pointerEventToCanvasPoint } from "@/lib/utils";
+
+const MAX_LAYERS = 100;
 
 interface CanvasProps {
   boardId: string;
@@ -49,6 +50,10 @@ export const Canvas = ({ boardId }: CanvasProps) => {
     []
   );
 
+  const onPointerLeave = useMutation(({ setMyPresence }) => {
+    setMyPresence({ cursor: null });
+  }, []);
+
   return (
     <main className=" h-full w-full relative bg-neutral-100 touch-none">
       <Info boardId={boardId} />
@@ -65,8 +70,9 @@ export const Canvas = ({ boardId }: CanvasProps) => {
         className=" h-[100vh] w-[100vw]"
         onWheel={onWheel}
         onPointerMove={onPointerMove}
+        onPointerLeave={onPointerLeave}
       >
-        <g>
+        <g style={{ transform: `translate(${camera.x}px, ${camera.y}px)` }}>
           <CursorsPresence />
         </g>
       </svg>
