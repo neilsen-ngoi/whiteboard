@@ -2,6 +2,7 @@
 
 import { memo } from "react";
 import { useOthersConnectionIds } from "@liveblocks/react/suspense";
+import { Cursor } from "./cursor";
 
 const Cursors = () => {
   const ids = useOthersConnectionIds();
@@ -17,7 +18,7 @@ const Cursors = () => {
 export const CursorsPresence = memo(() => {
   return (
     <>
-      <p>!!!</p>;
+      <Cursors />;
     </>
   );
 });
