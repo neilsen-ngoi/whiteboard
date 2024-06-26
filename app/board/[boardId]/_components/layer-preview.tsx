@@ -3,15 +3,16 @@
 import { LayerType } from "@/types/canvas";
 import { useStorage } from "@liveblocks/react/suspense";
 import { memo } from "react";
+import { Rectangle } from "./rectangle";
 
 interface LayerPreviewProps {
   id: string;
-  onLayerPointDown: (e: React.PointerEvent, layerId: string) => void; //fix types
+  onLayerPointerDown: (e: React.PointerEvent, layerId: string) => void; //fix types
   selectionColor?: string;
 }
 
 export const LayerPreview = memo(
-  ({ id, onLayerPointDown, selectionColor }: LayerPreviewProps) => {
+  ({ id, onLayerPointerDown, selectionColor }: LayerPreviewProps) => {
     const layer = useStorage((root) => root.layers.get(id));
 
     if (!layer) {
@@ -20,7 +21,14 @@ export const LayerPreview = memo(
 
     switch (layer.type) {
       case LayerType.Rectangle:
-        return <div>Rectangle</div>;
+        return (
+          <Rectangle
+            id={id}
+            layer={layer}
+            onPointerDown={onLayerPointerDown}
+            selectionColor={selectionColor}
+          />
+        );
       default:
         console.warn("Unknown layer type");
         return null;
