@@ -122,7 +122,7 @@ export const Canvas = ({ boardId }: CanvasProps) => {
     [camera, canvasState, history, insertLayer]
   );
 
-  const onLayetPointerDown = useMutation(
+  const onLayerPointerDown = useMutation(
     ({ self, setMyPresence }, e: React.PointerEvent, layerId: string) => {
       if (
         canvasState.mode === CanvasMode.Pencil ||

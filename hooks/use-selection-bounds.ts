@@ -1,5 +1,5 @@
 import { Layer, XYWH } from "@/types/canvas";
-import { shallow } from "@liveblocks/react";
+import { shallow } from "@liveblocks/react/suspense";
 import { useSelf, useStorage } from "@liveblocks/react/suspense";
 
 const boundingBox = (layers: Layer[]): XYWH | null => {
