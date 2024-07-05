@@ -21,3 +21,12 @@ canvas.tsx =>
 -InsertLayer hook is given the information and inserts a new layer(layerId,layer) that is stored in the useStorgae mutation from liveblocks
 -These are added to liveLayerIds and LiveLayers(handled by liveblocks), setMyPresence is updated which is added to history(hooks useCanUndo, useCanRedo, useHistory are enabled)
 -Finally setCanvasState is reset to mode:canvasMode.None(select item will automatically selected).
+
+Selection net logic flow
+canvas.tsx
+<svg>
+-onPointerDown sets the canvasState to pressing.
+-onPointerMove checks if above is true.
+-startMultiSelection method is fired.
+-above method will check to see if there is click and drag that goes beyond a certain treshold to indicate user is selecting multiple items.
+-any item with the selectionNet is added to the array of layerIds
