@@ -34,7 +34,6 @@ import { nanoid } from "nanoid";
 import { LiveObject } from "@liveblocks/client";
 import { LayerPreview } from "./layer-preview";
 import { SelectionBox } from "./selection-box";
-import { setGlobal } from "next/dist/trace";
 import { SelectionTools } from "./selection-tools";
 
 const MAX_LAYERS = 100;
@@ -186,7 +185,7 @@ export const Canvas = ({ boardId }: CanvasProps) => {
         pencilColor: lastUsedColor,
       });
     },
-    []
+    [lastUsedColor]
   );
 
   const continueDrawing = useMutation(
@@ -276,11 +275,11 @@ export const Canvas = ({ boardId }: CanvasProps) => {
       setMyPresence({ cursor: current });
     },
     [
+      camera,
+      canvasState,
       startMultiSelection,
       updateSelectionNet,
-      canvasState,
       resizeSelectedLayer,
-      camera,
       translateSelectedLayers,
       continueDrawing,
     ]
@@ -334,10 +333,10 @@ export const Canvas = ({ boardId }: CanvasProps) => {
       camera,
       canvasState,
       history,
+      setCanvasState,
       insertLayer,
       unSelectLayers,
       insertPath,
-      setCanvasState,
     ]
   );
 

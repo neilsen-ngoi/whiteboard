@@ -31,7 +31,7 @@ export const Path = ({
         })
       )}
       style={{
-        transform: `translate(${x}px.${y}px)`,
+        transform: `translate(${x}px,${y}px)`,
       }}
       x={0}
       y={0}
