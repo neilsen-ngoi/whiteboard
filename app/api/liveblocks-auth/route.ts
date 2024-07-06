@@ -6,8 +6,7 @@ import { auth, currentUser } from "@clerk/nextjs/server";
 const convex = new ConvexHttpClient(process.env.NEXT_PUBLIC_CONVEX_URL!);
 
 const liveblocks = new Liveblocks({
-  secret:
-    "sk_dev_4Sum163JfECGtmAwHEA8HYN-dueHQD7KTjcNB6HVIlyqi9d5xH-AxWPMnLImxby4",
+  secret: process.env.LIVEBLOCKS_SECRET_KEY!,
 });
 
 export async function POST(request: Request) {
@@ -27,7 +26,6 @@ export async function POST(request: Request) {
     return new Response("Unauthorized", { status: 403 });
   }
   const userInfo = {
-    //TODO check if ! behind firstName is needed
     name: user.firstName!,
     picture: user.imageUrl,
   };
